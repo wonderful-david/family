@@ -1,0 +1,21 @@
+{
+  "name": "family-website",
+  "version": "1.0.0",
+  "description": "가족과 함께하는 특별한 웹 애플리케이션",
+  "main": "index.html",
+  "scripts": {
+    "start": "start index.html",
+    "open-chrome": "open_chrome.bat"
+  },
+  "keywords": [
+    "family",
+    "calendar",
+    "quiz",
+    "birthday",
+    "web-app"
+  ],
+  "author": "Family",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+} 

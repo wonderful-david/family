@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생일 캘린더 - 우리 가족 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-nav">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 홈으로
+                </a>
+                <h1><i class="fas fa-birthday-cake"></i> 생일 캘린더</h1>
+            </div>
+            <p>가족들의 특별한 날을 기억하세요!</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 생일 추가 폼 -->
+            <div class="add-birthday-section">
+                <h2><i class="fas fa-plus-circle"></i> 생일 추가하기</h2>
+                <form id="birthdayForm" class="birthday-form">
+                    <div class="form-group">
+                        <label for="name">이름:</label>
+                        <input type="text" id="name" name="name" required placeholder="가족 이름">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">생일:</label>
+                        <input type="date" id="birthdate" name="birthdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="relationship">관계:</label>
+                        <select id="relationship" name="relationship">
+                            <option value="아빠">아빠</option>
+                            <option value="엄마">엄마</option>
+                            <option value="아들">아들</option>
+                            <option value="딸">딸</option>
+                            <option value="할아버지">할아버지</option>
+                            <option value="할머니">할머니</option>
+                            <option value="외할아버지">외할아버지</option>
+                            <option value="외할머니">외할머니</option>
+                            <option value="형">형</option>
+                            <option value="누나">누나</option>
+                            <option value="동생">동생</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="memo">메모:</label>
+                        <textarea id="memo" name="memo" placeholder="특별한 메모나 선호하는 선물 등"></textarea>
+                    </div>
+                    <button type="submit" class="btn-add">
+                        <i class="fas fa-plus"></i> 생일 추가
+                    </button>
+                </form>
+            </div>
+
+            <!-- 생일 목록 -->
+            <div class="birthday-list-section">
+                <h2><i class="fas fa-calendar-alt"></i> 생일 목록</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">전체</button>
+                    <button class="filter-btn" data-filter="upcoming">다가오는 생일</button>
+                    <button class="filter-btn" data-filter="this-month">이번 달</button>
+                </div>
+                <div id="birthdayList" class="birthday-list">
+                    <!-- 생일 목록이 여기에 동적으로 추가됩니다 -->
+                </div>
+            </div>
+
+            <!-- 다가오는 생일 알림 -->
+            <div class="upcoming-birthdays">
+                <h2><i class="fas fa-bell"></i> 다가오는 생일</h2>
+                <div id="upcomingList" class="upcoming-list">
+                    <!-- 다가오는 생일이 여기에 표시됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 생일 수정 모달 -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>생일 정보 수정</h2>
+            <form id="editForm" class="birthday-form">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editName">이름:</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBirthdate">생일:</label>
+                    <input type="date" id="editBirthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="editRelationship">관계:</label>
+                    <select id="editRelationship">
+                        <option value="아빠">아빠</option>
+                        <option value="엄마">엄마</option>
+                        <option value="아들">아들</option>
+                        <option value="딸">딸</option>
+                        <option value="할아버지">할아버지</option>
+                        <option value="할머니">할머니</option>
+                        <option value="외할아버지">외할아버지</option>
+                        <option value="외할머니">외할머니</option>
+                        <option value="형">형</option>
+                        <option value="누나">누나</option>
+                        <option value="동생">동생</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editMemo">메모:</label>
+                    <textarea id="editMemo"></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-save">저장</button>
+                    <button type="button" class="btn-cancel">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="birthday.js"></script>
+</body>
+</html> 
