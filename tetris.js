@@ -356,13 +356,30 @@ class Tetris {
         container.innerHTML = '';
         
         if (this.nextPiece) {
-            for (let row = 0; row < this.nextPiece.shape.length; row++) {
-                for (let col = 0; col < this.nextPiece.shape[row].length; col++) {
+            const shape = this.nextPiece.shape;
+            const rows = shape.length;
+            const cols = shape[0].length;
+            
+            // 4x4 그리드에 맞춰 중앙 정렬
+            const startRow = Math.floor((4 - rows) / 2);
+            const startCol = Math.floor((4 - cols) / 2);
+            
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
                     const cell = document.createElement('div');
                     cell.className = 'next-cell';
-                    if (this.nextPiece.shape[row][col]) {
+                    
+                    // 실제 블록이 있는 위치인지 확인
+                    const shapeRow = row - startRow;
+                    const shapeCol = col - startCol;
+                    
+                    if (shapeRow >= 0 && shapeRow < rows && 
+                        shapeCol >= 0 && shapeCol < cols && 
+                        shape[shapeRow][shapeCol]) {
                         cell.style.backgroundColor = this.nextPiece.color;
+                        cell.style.borderColor = 'rgba(255, 255, 255, 0.5)';
                     }
+                    
                     container.appendChild(cell);
                 }
             }
