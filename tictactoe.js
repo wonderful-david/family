@@ -3,6 +3,7 @@ class TicTacToe {
         this.board = ['', '', '', '', '', '', '', '', ''];
         this.currentPlayer = 'X';
         this.gameActive = true;
+        this.gameMode = 'pvp'; // 'pvp' or 'ai'
         this.scores = {
             X: 0,
             O: 0,
@@ -38,6 +39,18 @@ class TicTacToe {
         resetBtn.addEventListener('click', () => {
             this.resetGame();
         });
+
+        // 게임 모드 버튼
+        const pvpBtn = document.getElementById('pvp-btn');
+        const aiBtn = document.getElementById('ai-btn');
+        
+        pvpBtn.addEventListener('click', () => {
+            this.setGameMode('pvp');
+        });
+        
+        aiBtn.addEventListener('click', () => {
+            this.setGameMode('ai');
+        });
     }
 
     makeMove(index) {
@@ -51,6 +64,11 @@ class TicTacToe {
                 this.handleGameEnd('draw');
             } else {
                 this.switchPlayer();
+                
+                // AI 모드에서 AI 차례인 경우
+                if (this.gameMode === 'ai' && this.currentPlayer === 'O') {
+                    this.makeAIMove();
+                }
             }
         }
     }
@@ -165,6 +183,126 @@ class TicTacToe {
             this.scores = JSON.parse(savedScores);
             this.updateScoreDisplay();
         }
+    }
+
+    setGameMode(mode) {
+        this.gameMode = mode;
+        this.resetGame();
+        
+        // 버튼 스타일 업데이트
+        const pvpBtn = document.getElementById('pvp-btn');
+        const aiBtn = document.getElementById('ai-btn');
+        
+        pvpBtn.classList.toggle('active', mode === 'pvp');
+        aiBtn.classList.toggle('active', mode === 'ai');
+        
+        // AI 모드이고 AI가 먼저 시작하는 경우
+        if (mode === 'ai' && this.currentPlayer === 'O') {
+            this.makeAIMove();
+        }
+    }
+
+    makeAIMove() {
+        if (!this.gameActive) return;
+        
+        // AI가 생각하는 중 표시
+        const statusElement = document.getElementById('status');
+        statusElement.textContent = 'AI가 생각 중... 🤔';
+        statusElement.classList.add('ai-thinking');
+        
+        // 약간의 지연으로 자연스러운 느낌
+        setTimeout(() => {
+            const bestMove = this.findBestMove();
+            if (bestMove !== -1) {
+                this.board[bestMove] = 'O';
+                this.renderBoard();
+                
+                if (this.checkWinner()) {
+                    this.handleGameEnd('win');
+                } else if (this.checkDraw()) {
+                    this.handleGameEnd('draw');
+                } else {
+                    this.switchPlayer();
+                }
+            }
+            
+            statusElement.classList.remove('ai-thinking');
+        }, 500);
+    }
+
+    findBestMove() {
+        let bestScore = -Infinity;
+        let bestMove = -1;
+        
+        for (let i = 0; i < 9; i++) {
+            if (this.board[i] === '') {
+                this.board[i] = 'O';
+                let score = this.minimax(this.board, 0, false);
+                this.board[i] = '';
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
+        
+        return bestMove;
+    }
+
+    minimax(board, depth, isMaximizing) {
+        // 종료 조건
+        if (this.checkWinnerForAI(board)) {
+            return isMaximizing ? -1 : 1;
+        }
+        
+        if (this.checkDrawForAI(board)) {
+            return 0;
+        }
+        
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = 'O';
+                    let score = this.minimax(board, depth + 1, false);
+                    board[i] = '';
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = 'X';
+                    let score = this.minimax(board, depth + 1, true);
+                    board[i] = '';
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
+
+    checkWinnerForAI(board) {
+        const winConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkDrawForAI(board) {
+        return board.every(cell => cell !== '');
     }
 }
 

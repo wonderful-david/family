@@ -114,6 +114,44 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        .game-mode {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-btn.active {
+            background: #4a90e2;
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-thinking {
+            animation: thinking-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes thinking-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .winner {
             animation: winner-glow 1s ease-in-out infinite alternate;
         }
@@ -134,6 +172,10 @@
         <div class="tictactoe-container">
             <div class="game-info">
                 <div class="status" id="status">X 차례입니다!</div>
+                <div class="game-mode">
+                    <button class="mode-btn active" id="pvp-btn">👥 2인 플레이</button>
+                    <button class="mode-btn" id="ai-btn">🤖 AI 대전</button>
+                </div>
                 <div class="score-board">
                     <div class="score-item">
                         <strong>X</strong><br>
