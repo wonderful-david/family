@@ -160,6 +160,57 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
+        .mobile-controls {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .control-btn-mobile {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .control-btn-mobile:active {
+            transform: scale(0.95);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .control-btn-mobile.large {
+            width: 80px;
+            height: 80px;
+            font-size: 2em;
+        }
+
+        .control-btn-mobile.rotate {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .control-btn-mobile.drop {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
         @media (max-width: 768px) {
             .tetris-container {
                 flex-direction: column;
@@ -169,6 +220,14 @@
             .game-info {
                 margin-left: 0;
                 margin-top: 20px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+
+            .mobile-controls {
+                display: block;
             }
         }
     </style>
@@ -187,6 +246,21 @@
                     <h2>게임 오버!</h2>
                     <p>최종 점수: <span id="finalScore">0</span></p>
                     <button class="control-btn" onclick="tetrisGame.restart()">다시 시작</button>
+                </div>
+                
+                <!-- 모바일 컨트롤 버튼 -->
+                <div class="mobile-controls">
+                    <div class="control-row">
+                        <button class="control-btn-mobile rotate" id="rotateBtn">🔄</button>
+                    </div>
+                    <div class="control-row">
+                        <button class="control-btn-mobile" id="leftBtn">⬅️</button>
+                        <button class="control-btn-mobile large" id="downBtn">⬇️</button>
+                        <button class="control-btn-mobile" id="rightBtn">➡️</button>
+                    </div>
+                    <div class="control-row">
+                        <button class="control-btn-mobile drop" id="dropBtn">💥</button>
+                    </div>
                 </div>
             </div>
 

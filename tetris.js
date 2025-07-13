@@ -122,9 +122,54 @@ class Tetris {
             }
         });
 
-        document.getElementById('startBtn').addEventListener('click', () => this.start());
-        document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
-        document.getElementById('restartBtn').addEventListener('click', () => this.restart());
+                    document.getElementById('startBtn').addEventListener('click', () => this.start());
+            document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
+            document.getElementById('restartBtn').addEventListener('click', () => this.restart());
+
+            // 모바일 컨트롤 버튼 이벤트
+            document.getElementById('leftBtn').addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(-1, 0);
+                }
+            });
+            
+            document.getElementById('rightBtn').addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(1, 0);
+                }
+            });
+            
+            document.getElementById('downBtn').addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(0, 1);
+                }
+            });
+            
+            document.getElementById('rotateBtn').addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.rotatePiece();
+                }
+            });
+            
+            document.getElementById('dropBtn').addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.hardDrop();
+                }
+            });
+
+            // 터치 이벤트 추가 (모바일에서 더 부드럽게)
+            const mobileButtons = document.querySelectorAll('.control-btn-mobile');
+            mobileButtons.forEach(button => {
+                button.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    button.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    button.style.transform = 'scale(1)';
+                });
+            });
     }
 
     spawnPiece() {
