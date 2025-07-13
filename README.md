@@ -27,6 +27,15 @@
 - 승리 조건 하이라이트 효과
 - 자동 새 게임 시작
 
+### 🧩 테트리스
+
+- 클래식 테트리스 게임
+- 7가지 테트로미노 블록
+- 레벨 시스템 (속도 증가)
+- 다음 블록 미리보기
+- 고스트 블록 (착지 위치 표시)
+- 하드 드롭 기능
+
 ## 🚀 실행 방법
 
 1. **Chrome으로 열기**
@@ -48,11 +57,13 @@ family-website/
 ├── birthday.html       # 생일 캘린더
 ├── quiz.html          # 퀴즈 페이지
 ├── tictactoe.html     # 틱택토 게임
+├── tetris.html        # 테트리스 게임
 ├── style.css          # 스타일시트
 ├── main.js            # 메인 페이지 스크립트
 ├── birthday.js        # 생일 관리 스크립트
 ├── quiz.js            # 퀴즈 스크립트
 ├── tictactoe.js       # 틱택토 게임 스크립트
+├── tetris.js          # 테트리스 게임 스크립트
 ├── open_chrome.bat    # Chrome 실행 스크립트
 └── README.md          # 프로젝트 설명서
 ```

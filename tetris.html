@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테트리스 - 우리 가족 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tetris-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-board {
+            border: 3px solid #4a90e2;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .game-info {
+            margin-left: 30px;
+            min-width: 200px;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-display {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .next-piece {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .next-piece-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            margin: 10px auto;
+            width: 80px;
+            height: 80px;
+        }
+
+        .next-cell {
+            width: 18px;
+            height: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            width: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tetromino {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .tetromino.I { background: #00f5ff; }
+        .tetromino.O { background: #ffff00; }
+        .tetromino.T { background: #a000f0; }
+        .tetromino.S { background: #00f000; }
+        .tetromino.Z { background: #f00000; }
+        .tetromino.J { background: #0000f0; }
+        .tetromino.L { background: #f0a000; }
+
+        .ghost {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .tetris-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-info {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 테트리스</h1>
+            <p>가족과 함께하는 클래식 테트리스!</p>
+        </header>
+
+        <div class="tetris-container">
+            <div class="game-area">
+                <canvas id="tetris" width="300" height="600"></canvas>
+                <div class="game-over" id="gameOver">
+                    <h2>게임 오버!</h2>
+                    <p>최종 점수: <span id="finalScore">0</span></p>
+                    <button class="control-btn" onclick="tetrisGame.restart()">다시 시작</button>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="info-panel">
+                    <div class="score-display">
+                        <div class="score-item">
+                            <span>점수:</span>
+                            <span id="score">0</span>
+                        </div>
+                        <div class="score-item">
+                            <span>레벨:</span>
+                            <span id="level">1</span>
+                        </div>
+                        <div class="score-item">
+                            <span>라인:</span>
+                            <span id="lines">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="next-piece">
+                        <h3>다음 블록</h3>
+                        <div class="next-piece-board" id="nextPiece"></div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="controls">
+                        <h3>조작법</h3>
+                        <p>← → : 이동</p>
+                        <p>↓ : 빠른 하강</p>
+                        <p>↑ : 회전</p>
+                        <p>스페이스 : 즉시 하강</p>
+                        <p>P : 일시정지</p>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <button class="control-btn" id="startBtn">게임 시작</button>
+                    <button class="control-btn" id="pauseBtn">일시정지</button>
+                    <button class="control-btn" id="restartBtn">다시 시작</button>
+                    <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="tetris.js"></script>
+</body>
+</html> 
