@@ -180,13 +180,13 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px;
+            padding: 20px;
             border-radius: 50%;
-            font-size: 1.5em;
+            font-size: 2em;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -196,6 +196,7 @@
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
             min-height: 44px; /* iOS 권장 최소 터치 크기 */
+            margin: 5px;
         }
 
         .control-btn-mobile:active {
@@ -204,9 +205,9 @@
         }
 
         .control-btn-mobile.large {
-            width: 90px;
-            height: 90px;
-            font-size: 2em;
+            width: 100px;
+            height: 100px;
+            font-size: 2.5em;
         }
 
         .control-btn-mobile.rotate {
@@ -257,15 +258,15 @@
                 <!-- 모바일 컨트롤 버튼 -->
                 <div class="mobile-controls">
                     <div class="control-row">
-                        <button class="control-btn-mobile rotate" id="rotateBtn">🔄</button>
+                        <button class="control-btn-mobile rotate" id="rotateBtn" onclick="if(tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) tetrisGame.rotatePiece()">🔄</button>
                     </div>
                     <div class="control-row">
-                        <button class="control-btn-mobile" id="leftBtn">⬅️</button>
-                        <button class="control-btn-mobile large" id="downBtn">⬇️</button>
-                        <button class="control-btn-mobile" id="rightBtn">➡️</button>
+                        <button class="control-btn-mobile" id="leftBtn" onclick="if(tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) tetrisGame.movePiece(-1, 0)">⬅️</button>
+                        <button class="control-btn-mobile large" id="downBtn" onclick="if(tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) tetrisGame.movePiece(0, 1)">⬇️</button>
+                        <button class="control-btn-mobile" id="rightBtn" onclick="if(tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) tetrisGame.movePiece(1, 0)">➡️</button>
                     </div>
                     <div class="control-row">
-                        <button class="control-btn-mobile drop" id="dropBtn">💥</button>
+                        <button class="control-btn-mobile drop" id="dropBtn" onclick="if(tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) tetrisGame.hardDrop()">💥</button>
                     </div>
                 </div>
             </div>

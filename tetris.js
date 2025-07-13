@@ -126,7 +126,7 @@ class Tetris {
             document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
             document.getElementById('restartBtn').addEventListener('click', () => this.restart());
 
-            // 모바일 컨트롤 버튼 이벤트 - 터치와 클릭 모두 지원
+            // 모바일 컨트롤 버튼 이벤트 - 모든 이벤트 타입 지원
             const leftBtn = document.getElementById('leftBtn');
             const rightBtn = document.getElementById('rightBtn');
             const downBtn = document.getElementById('downBtn');
@@ -134,69 +134,54 @@ class Tetris {
             const dropBtn = document.getElementById('dropBtn');
 
             // 왼쪽 버튼
-            leftBtn.addEventListener('click', () => {
+            const leftAction = () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(-1, 0);
                 }
-            });
-            leftBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (this.gameRunning && !this.gamePaused) {
-                    this.movePiece(-1, 0);
-                }
-            });
+            };
+            leftBtn.onclick = leftAction;
+            leftBtn.ontouchstart = (e) => { e.preventDefault(); leftAction(); };
+            leftBtn.ontouchend = (e) => { e.preventDefault(); };
 
             // 오른쪽 버튼
-            rightBtn.addEventListener('click', () => {
+            const rightAction = () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(1, 0);
                 }
-            });
-            rightBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (this.gameRunning && !this.gamePaused) {
-                    this.movePiece(1, 0);
-                }
-            });
+            };
+            rightBtn.onclick = rightAction;
+            rightBtn.ontouchstart = (e) => { e.preventDefault(); rightAction(); };
+            rightBtn.ontouchend = (e) => { e.preventDefault(); };
 
             // 아래 버튼
-            downBtn.addEventListener('click', () => {
+            const downAction = () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(0, 1);
                 }
-            });
-            downBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (this.gameRunning && !this.gamePaused) {
-                    this.movePiece(0, 1);
-                }
-            });
+            };
+            downBtn.onclick = downAction;
+            downBtn.ontouchstart = (e) => { e.preventDefault(); downAction(); };
+            downBtn.ontouchend = (e) => { e.preventDefault(); };
 
             // 회전 버튼
-            rotateBtn.addEventListener('click', () => {
+            const rotateAction = () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.rotatePiece();
                 }
-            });
-            rotateBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (this.gameRunning && !this.gamePaused) {
-                    this.rotatePiece();
-                }
-            });
+            };
+            rotateBtn.onclick = rotateAction;
+            rotateBtn.ontouchstart = (e) => { e.preventDefault(); rotateAction(); };
+            rotateBtn.ontouchend = (e) => { e.preventDefault(); };
 
             // 드롭 버튼
-            dropBtn.addEventListener('click', () => {
+            const dropAction = () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.hardDrop();
                 }
-            });
-            dropBtn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (this.gameRunning && !this.gamePaused) {
-                    this.hardDrop();
-                }
-            });
+            };
+            dropBtn.onclick = dropAction;
+            dropBtn.ontouchstart = (e) => { e.preventDefault(); dropAction(); };
+            dropBtn.ontouchend = (e) => { e.preventDefault(); };
 
             // 모바일 버튼 시각적 피드백
             const mobileButtons = document.querySelectorAll('.control-btn-mobile');
