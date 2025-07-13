@@ -6,6 +6,10 @@ class Tetris {
         this.BOARD_HEIGHT = 20;
         this.BLOCK_SIZE = 30;
         
+        // 캔버스 크기 설정
+        this.canvas.width = this.BOARD_WIDTH * this.BLOCK_SIZE;
+        this.canvas.height = this.BOARD_HEIGHT * this.BLOCK_SIZE;
+        
         this.board = [];
         this.score = 0;
         this.level = 1;
@@ -275,6 +279,9 @@ class Tetris {
             this.drawPiece(this.currentPiece);
             this.drawGhostPiece();
         }
+        
+        // 그리드 라인 그리기 (선택사항)
+        this.drawGrid();
     }
 
     drawBlock(x, y, type) {
@@ -314,6 +321,27 @@ class Tetris {
                     );
                 }
             }
+        }
+    }
+
+    drawGrid() {
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        this.ctx.lineWidth = 1;
+        
+        // 세로 라인
+        for (let x = 0; x <= this.BOARD_WIDTH; x++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x * this.BLOCK_SIZE, 0);
+            this.ctx.lineTo(x * this.BLOCK_SIZE, this.BOARD_HEIGHT * this.BLOCK_SIZE);
+            this.ctx.stroke();
+        }
+        
+        // 가로 라인
+        for (let y = 0; y <= this.BOARD_HEIGHT; y++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y * this.BLOCK_SIZE);
+            this.ctx.lineTo(this.BOARD_WIDTH * this.BLOCK_SIZE, y * this.BLOCK_SIZE);
+            this.ctx.stroke();
         }
     }
 
@@ -383,7 +411,7 @@ class Tetris {
     gameLoop() {
         if (this.gameRunning) {
             this.update();
-            requestAnimationFrame(() => this.gameLoop());
+            setTimeout(() => this.gameLoop(), 16); // 60fps로 고정
         }
     }
 }
