@@ -126,79 +126,93 @@ class Tetris {
             document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
             document.getElementById('restartBtn').addEventListener('click', () => this.restart());
 
-            // 모바일 컨트롤 버튼 이벤트
-            document.getElementById('leftBtn').addEventListener('click', () => {
+            // 모바일 컨트롤 버튼 이벤트 - 터치와 클릭 모두 지원
+            const leftBtn = document.getElementById('leftBtn');
+            const rightBtn = document.getElementById('rightBtn');
+            const downBtn = document.getElementById('downBtn');
+            const rotateBtn = document.getElementById('rotateBtn');
+            const dropBtn = document.getElementById('dropBtn');
+
+            // 왼쪽 버튼
+            leftBtn.addEventListener('click', () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(-1, 0);
                 }
             });
-            
-            document.getElementById('rightBtn').addEventListener('click', () => {
+            leftBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(-1, 0);
+                }
+            });
+
+            // 오른쪽 버튼
+            rightBtn.addEventListener('click', () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(1, 0);
                 }
             });
-            
-            document.getElementById('downBtn').addEventListener('click', () => {
+            rightBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(1, 0);
+                }
+            });
+
+            // 아래 버튼
+            downBtn.addEventListener('click', () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.movePiece(0, 1);
                 }
             });
-            
-            document.getElementById('rotateBtn').addEventListener('click', () => {
+            downBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (this.gameRunning && !this.gamePaused) {
+                    this.movePiece(0, 1);
+                }
+            });
+
+            // 회전 버튼
+            rotateBtn.addEventListener('click', () => {
                 if (this.gameRunning && !this.gamePaused) {
                     this.rotatePiece();
                 }
             });
-            
-            document.getElementById('dropBtn').addEventListener('click', () => {
+            rotateBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (this.gameRunning && !this.gamePaused) {
+                    this.rotatePiece();
+                }
+            });
+
+            // 드롭 버튼
+            dropBtn.addEventListener('click', () => {
+                if (this.gameRunning && !this.gamePaused) {
+                    this.hardDrop();
+                }
+            });
+            dropBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
                 if (this.gameRunning && !this.gamePaused) {
                     this.hardDrop();
                 }
             });
 
-            // 터치 이벤트 추가 (모바일에서 더 부드럽게)
+            // 모바일 버튼 시각적 피드백
             const mobileButtons = document.querySelectorAll('.control-btn-mobile');
             mobileButtons.forEach(button => {
-                // 터치 이벤트
                 button.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    button.style.transform = 'scale(0.95)';
+                    button.style.transform = 'scale(0.9)';
                 });
                 
                 button.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
                     button.style.transform = 'scale(1)';
                 });
                 
                 button.addEventListener('touchcancel', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    button.style.transform = 'scale(1)';
-                });
-                
-                // 클릭 이벤트도 추가 (터치가 안 될 때를 대비)
-                button.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    button.style.transform = 'scale(0.95)';
-                });
-                
-                button.addEventListener('mouseup', (e) => {
-                    e.preventDefault();
                     button.style.transform = 'scale(1)';
                 });
             });
-
-            // 모바일에서 터치 이벤트가 제대로 작동하도록 추가 설정
-            document.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-            }, { passive: false });
-            
-            document.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-            }, { passive: false });
     }
 
     spawnPiece() {
