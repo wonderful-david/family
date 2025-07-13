@@ -160,16 +160,45 @@ class Tetris {
             // 터치 이벤트 추가 (모바일에서 더 부드럽게)
             const mobileButtons = document.querySelectorAll('.control-btn-mobile');
             mobileButtons.forEach(button => {
+                // 터치 이벤트
                 button.addEventListener('touchstart', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     button.style.transform = 'scale(0.95)';
                 });
                 
                 button.addEventListener('touchend', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    button.style.transform = 'scale(1)';
+                });
+                
+                button.addEventListener('touchcancel', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    button.style.transform = 'scale(1)';
+                });
+                
+                // 클릭 이벤트도 추가 (터치가 안 될 때를 대비)
+                button.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    button.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
                     button.style.transform = 'scale(1)';
                 });
             });
+
+            // 모바일에서 터치 이벤트가 제대로 작동하도록 추가 설정
+            document.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+            }, { passive: false });
+            
+            document.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            }, { passive: false });
     }
 
     spawnPiece() {
