@@ -54,6 +54,11 @@ class TicTacToe {
     }
 
     makeMove(index) {
+        // AI 모드에서 AI 차례일 때는 클릭 무시
+        if (this.gameMode === 'ai' && this.currentPlayer === 'O') {
+            return;
+        }
+        
         if (this.board[index] === '' && this.gameActive) {
             this.board[index] = this.currentPlayer;
             this.renderBoard();
@@ -160,6 +165,15 @@ class TicTacToe {
             } else if (this.board[index] === 'O') {
                 cell.classList.add('o');
             }
+            
+            // AI 모드에서 AI 차례일 때는 셀 비활성화
+            if (this.gameMode === 'ai' && this.currentPlayer === 'O' && this.gameActive) {
+                cell.style.cursor = 'not-allowed';
+                cell.style.opacity = '0.6';
+            } else {
+                cell.style.cursor = 'pointer';
+                cell.style.opacity = '1';
+            }
         });
     }
 
@@ -209,6 +223,9 @@ class TicTacToe {
         const statusElement = document.getElementById('status');
         statusElement.textContent = 'AI가 생각 중... 🤔';
         statusElement.classList.add('ai-thinking');
+        
+        // 셀 비활성화 (AI 차례임을 시각적으로 표시)
+        this.renderBoard();
         
         // 약간의 지연으로 자연스러운 느낌
         setTimeout(() => {
