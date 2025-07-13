@@ -511,3 +511,34 @@ let tetrisGame;
 document.addEventListener('DOMContentLoaded', () => {
     tetrisGame = new Tetris();
 }); 
+
+// 모바일 컨트롤을 위한 간단한 전역 함수들
+function rotatePiece() {
+    if (tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) {
+        tetrisGame.rotatePiece();
+    }
+}
+
+function moveLeft() {
+    if (tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) {
+        tetrisGame.movePiece(-1, 0);
+    }
+}
+
+function moveRight() {
+    if (tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) {
+        tetrisGame.movePiece(1, 0);
+    }
+}
+
+function moveDown() {
+    if (tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) {
+        tetrisGame.movePiece(0, 1);
+    }
+}
+
+function hardDrop() {
+    if (tetrisGame && tetrisGame.gameRunning && !tetrisGame.gamePaused) {
+        tetrisGame.hardDrop();
+    }
+} 
