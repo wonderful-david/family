@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>틱택토 - 우리 가족 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tictactoe-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 30px auto;
+            max-width: 300px;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .cell:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: scale(1.05);
+        }
+
+        .cell.x {
+            color: #e74c3c;
+        }
+
+        .cell.o {
+            color: #3498db;
+        }
+
+        .game-info {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .score-item {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .winner {
+            animation: winner-glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes winner-glow {
+            from { box-shadow: 0 0 5px #f39c12; }
+            to { box-shadow: 0 0 20px #f39c12, 0 0 30px #f39c12; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 틱택토 게임</h1>
+            <p>가족과 함께하는 재미있는 틱택토!</p>
+        </header>
+
+        <div class="tictactoe-container">
+            <div class="game-info">
+                <div class="status" id="status">X 차례입니다!</div>
+                <div class="score-board">
+                    <div class="score-item">
+                        <strong>X</strong><br>
+                        <span id="score-x">0</span>승
+                    </div>
+                    <div class="score-item">
+                        <strong>O</strong><br>
+                        <span id="score-o">0</span>승
+                    </div>
+                    <div class="score-item">
+                        <strong>무승부</strong><br>
+                        <span id="score-draw">0</span>회
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board" id="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+
+            <button class="reset-btn" id="reset-btn">새 게임</button>
+            <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+        </div>
+    </div>
+
+    <script src="tictactoe.js"></script>
+</body>
+</html> 
