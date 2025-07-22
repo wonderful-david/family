@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>우주 슈팅 게임 - 우리 가족 홈페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .shooting-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-board {
+            border: 3px solid #4a90e2;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        #shootingCanvas {
+            border: 3px solid #4a90e2;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #000033, #000066);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .game-info {
+            margin-left: 30px;
+            min-width: 200px;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-display {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            width: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-controls {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .control-btn-mobile {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 25px;
+            border-radius: 50%;
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 60px;
+            margin: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .control-btn-mobile:active {
+            transform: scale(0.95);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .control-btn-mobile.large {
+            width: 120px;
+            height: 120px;
+            font-size: 3em;
+        }
+
+        .control-btn-mobile.shoot {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        @media (max-width: 768px) {
+            .shooting-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-info {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+
+            .mobile-controls {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 우주 슈팅 게임</h1>
+            <p>우주선을 조종해서 적들을 물리치세요!</p>
+        </header>
+
+        <div class="shooting-container">
+            <div class="game-area">
+                <canvas id="shootingCanvas" width="400" height="600"></canvas>
+                <div class="game-over" id="gameOver">
+                    <h2>게임 오버!</h2>
+                    <p>최종 점수: <span id="finalScore">0</span></p>
+                    <button class="control-btn" onclick="shootingGame.restart()">다시 시작</button>
+                </div>
+                
+                <!-- 모바일 컨트롤 버튼 -->
+                <div class="mobile-controls">
+                    <div class="control-row">
+                        <button class="control-btn-mobile" onclick="moveLeft()">⬅️</button>
+                        <button class="control-btn-mobile shoot" onclick="shoot()">🔥</button>
+                        <button class="control-btn-mobile" onclick="moveRight()">➡️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div class="info-panel">
+                    <div class="score-display">
+                        <div class="score-item">
+                            <span>점수:</span>
+                            <span id="score">0</span>
+                        </div>
+                        <div class="score-item">
+                            <span>레벨:</span>
+                            <span id="level">1</span>
+                        </div>
+                        <div class="score-item">
+                            <span>생명:</span>
+                            <span id="lives">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="controls">
+                        <h3>조작법</h3>
+                        <p>← → : 이동</p>
+                        <p>스페이스 : 발사</p>
+                        <p>P : 일시정지</p>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <button class="control-btn" id="startBtn">게임 시작</button>
+                    <button class="control-btn" id="pauseBtn">일시정지</button>
+                    <button class="control-btn" id="restartBtn">다시 시작</button>
+                    <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="shooting.js"></script>
+</body>
+</html> 

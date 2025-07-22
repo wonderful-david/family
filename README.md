@@ -11,6 +11,8 @@
 - **틱택토**: https://wonderful-david.github.io/family/tictactoe.html
 - **퀴즈**: https://wonderful-david.github.io/family/quiz.html
 - **생일 캘린더**: https://wonderful-david.github.io/family/birthday.html
+- **우주 슈팅**: https://wonderful-david.github.io/family/shooting.html
+- **방학 시간표**: https://wonderful-david.github.io/family/timetable.html
 
 ## 📋 기능
 
@@ -46,6 +48,15 @@
 - 고스트 블록 (착지 위치 표시)
 - 하드 드롭 기능
 
+### 🚀 우주 슈팅 게임
+
+- 우주선을 조종해서 적들을 물리치는 슈팅 게임
+- 레벨 시스템 (난이도 증가)
+- 생명 시스템 (3개 생명)
+- 폭발 효과
+- 별 배경
+- 모바일 터치 컨트롤 지원
+
 ## 🚀 실행 방법
 
 ### 🌐 온라인 접속 (권장)
@@ -78,6 +89,12 @@
 - **스페이스**: 즉시 하강
 - **P**: 일시정지
 
+### 우주 슈팅
+
+- **← →**: 우주선 이동
+- **스페이스**: 발사
+- **P**: 일시정지
+
 ### 틱택토
 
 - **마우스 클릭**: 블록 선택
@@ -93,12 +110,14 @@ family-website/
 ├── quiz.html          # 퀴즈 페이지
 ├── tictactoe.html     # 틱택토 게임
 ├── tetris.html        # 테트리스 게임
+├── shooting.html      # 우주 슈팅 게임
 ├── style.css          # 스타일시트
 ├── main.js            # 메인 페이지 스크립트
 ├── birthday.js        # 생일 관리 스크립트
 ├── quiz.js            # 퀴즈 스크립트
 ├── tictactoe.js       # 틱택토 게임 스크립트
 ├── tetris.js          # 테트리스 게임 스크립트
+├── shooting.js        # 우주 슈팅 게임 스크립트
 ├── open_chrome.bat    # Chrome 실행 스크립트
 └── README.md          # 프로젝트 설명서
 ```
@@ -113,6 +132,12 @@ family-website/
 - **GitHub Pages** - 웹 호스팅
 
 ## 📝 업데이트 로그
+
+### v1.3.0 (2024-12-19)
+
+- ✅ 우주 슈팅 게임 추가
+- ✅ 모바일 터치 컨트롤 지원
+- ✅ 폭발 효과 및 시각적 개선
 
 ### v1.2.0 (2024-12-19)
 
